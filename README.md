@@ -1,25 +1,22 @@
-name: main
+name: Daily Commit
 
 on:
-  push:
-    branches:
-      - main
   schedule:
-    - cron: "* */6 * * *"
-permissions:
-  contents: write
+    - cron: '0 11 * * *'
+
 jobs:
-  autogreen:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Clone repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: stick
+      - name: Create a dummy commit
         run: |
-          date > date.txt
-          git config --local user.name "alemifoto"
-          git config --local user.email "alemifoto282@gmail.com"
-          git add date.txt
-          git commit --allow-empty -m "updated txt"
-          git push  
+          date >> dummy.txt
+          git config --global user.name 'alemifoto'
+          git config --global user.email 'alemifoto282@gmail.com'
+          git add dummy.txt
+          git commit -m "Daily update"
+          git push
